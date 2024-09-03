@@ -12,6 +12,11 @@
             color: #333;
             margin: 0;
             padding: 0;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .dark-mode {
+            background-color: #2c3e50;
+            color: white;
         }
         header {
             background-color: #2c3e50;
@@ -180,6 +185,7 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             max-width: 400px;
             margin: 20px auto;
+            text-align: center;
         }
         .chatbot-container h3 {
             margin-top: 0;
@@ -212,13 +218,70 @@
             border-radius: 5px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
+        /* 다크 모드 버튼 */
+        .dark-mode-button {
+            background-color: #333;
+            color: white;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 15px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5em;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .dark-mode-button:hover {
+            background-color: #444;
+        }
+        /* YouTube Shorts 임베드 스타일 */
+        .youtube-shorts {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 비율 */
+            height: 0;
+            overflow: hidden;
+            background-color: #000;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .youtube-shorts iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+        .hide-button {
+            margin-top: 10px;
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 1em;
+            display: block;
+            width: 100%;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+        .hide-button:hover {
+            background-color: #e60000;
+        }
     </style>
 </head>
 <body>
 
 <header>
     <div class="logo">
-        <img src="l"D:\User_Data(절대삭제금지!)\Desktop\DALL·E 2024-09-03 09.49.10 - A modern logo for a tax refund service called '빵원'. The logo should incorporate elements that symbolize money or savings, such as a stylized coin, a p.webp"" alt="빵원 로고" width="40" height="40">
+        <img src="D:\User_Data(절대삭제금지!)\Desktop\DALL·E 2024-09-03 09.49.10 - A modern logo for a tax refund service called '빵원'. The logo should incorporate elements that symbolize money or savings, such as a stylized coin, a p.webp" alt="빵원 로고" width="40" height="40">
         <span>빵원</span>
     </div>
     <nav>
@@ -233,7 +296,20 @@
     </nav>
 </header>
 
+<!-- 다크 모드 버튼 -->
+<div class="dark-mode-button" onclick="toggleDarkMode()">🌙</div>
+
 <div class="container">
+    <!-- 유튜브 쇼츠 영상 임베드 -->
+    <div class="youtube-shorts" id="shorts1">
+        <iframe src="https://www.youtube.com/embed/wyyMKKit554?autoplay=1&loop=1&playlist=wyyMKKit554" 
+                title="YouTube video player" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                allowfullscreen></iframe>
+        <button class="hide-button" onclick="hideShorts('shorts1')">이 영상 안보기</button>
+    </div>
+
     <!-- 광고 배너 -->
     <div class="ad-banner">
         <p>여기에 광고를 게재하세요! 클릭률이 높은 위치입니다.</p>
@@ -391,6 +467,14 @@
         <button type="submit">구독하기</button>
     </section>
 
+    <!-- 피드백 폼 -->
+    <section class="feedback-form">
+        <h3>서비스 피드백 남기기</h3>
+        <input type="text" placeholder="이름을 입력하세요">
+        <textarea rows="4" placeholder="피드백 내용을 입력하세요"></textarea>
+        <button type="submit">피드백 제출</button>
+    </section>
+
     <!-- 대화형 FAQ 및 챗봇 -->
     <section class="chatbot-container">
         <h3>무엇을 도와드릴까요?</h3>
@@ -421,6 +505,11 @@
         } else {
             document.getElementById('result').innerText = '모든 필드를 입력해주세요.';
         }
+    }
+
+    // 다크 모드 전환
+    function toggleDarkMode() {
+        document.body.classList.toggle('dark-mode');
     }
 
     // FAQ와 뉴스 섹션 자동 전환 기능
@@ -475,6 +564,12 @@
     // 실시간 채팅 상담 창 열기 (더미 함수)
     function openChat() {
         alert("실시간 채팅 상담 기능은 아직 구현되지 않았습니다.");
+    }
+
+    // YouTube Shorts 숨기기
+    function hideShorts(id) {
+        const element = document.getElementById(id);
+        element.style.display = "none";
     }
 </script>
 

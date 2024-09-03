@@ -6,63 +6,67 @@
     <title>칼퇴 - 소득 관리 달력</title>
     <style>
         body {
-            font-family: 'Noto Sans KR', sans-serif;
+            font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f9f9f9;
-            color: #333;
+            background-color: #f4f4f9;
+            color: #2c3e50;
+            line-height: 1.6;
         }
         header {
-            background-color: #4CAF50;
+            background-color: #3498db;
             color: white;
-            text-align: center;
-            padding: 2rem 0;
-            font-size: 2.5rem;
-            font-weight: bold;
+            padding: 1rem;
             position: relative;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
-        header:before {
-            content: "";
-            background-image: url('https://www.w3schools.com/howto/img_calendar.png'); /* 달력 이미지 추가 */
-            background-size: cover;
-            background-position: center;
-            opacity: 0.2;
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: 1;
+        header img {
+            height: 50px;
         }
         header h1 {
-            position: relative;
-            z-index: 2;
-        }
-        .container {
-            width: 80%;
-            margin: 20px auto;
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
-        }
-        h2 {
-            color: #4CAF50;
             font-size: 2rem;
             font-weight: bold;
+            margin: 0;
+            text-align: center;
+            flex: 1;
+        }
+        header .youtube-link {
+            margin-right: 20px;
+        }
+        .youtube-link img {
+            width: 40px;
+            height: 40px;
+            vertical-align: middle;
+        }
+        .container {
+            width: 85%;
+            margin: 20px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #3498db;
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 20px;
         }
         input[type="text"], input[type="number"], input[type="date"], select {
             width: calc(100% - 22px);
-            padding: 10px;
+            padding: 12px;
             margin: 10px 0;
-            border: 1px solid #ccc;
+            border: 1px solid #bdc3c7;
             border-radius: 5px;
-            background-color: #f0f0f0;
-            color: #333;
+            background-color: #ecf0f1;
+            color: #34495e;
         }
         button {
-            padding: 10px 20px;
-            background-color: #4CAF50;
+            padding: 12px 25px;
+            background-color: #3498db;
             color: white;
             border: none;
             border-radius: 5px;
@@ -70,32 +74,40 @@
             margin-top: 10px;
             font-size: 1rem;
             font-weight: bold;
+            transition: background-color 0.3s;
         }
         button:hover {
-            background-color: #45a049;
+            background-color: #2980b9;
         }
         .calendar {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
             gap: 10px;
             margin-top: 20px;
+            background-color: #ecf0f1;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         .calendar div {
-            background-color: #f0f0f0;
+            background-color: white;
             padding: 20px;
             text-align: center;
-            border-radius: 5px;
+            border-radius: 10px;
             cursor: pointer;
             position: relative;
             font-size: 1rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease-in-out;
         }
         .calendar div:hover {
-            background-color: #e0e0e0;
+            transform: translateY(-5px);
+            background-color: #d0dfe6;
         }
         .calendar div span {
             display: block;
             margin-top: 10px;
-            color: #4CAF50;
+            color: #3498db;
             font-weight: bold;
             font-size: 1.1rem;
         }
@@ -105,41 +117,43 @@
             font-size: 1.2rem;
         }
         .calendar-nav button {
-            background-color: #4CAF50;
+            background-color: #3498db;
             color: white;
             border: none;
-            padding: 8px 12px;
+            padding: 10px 15px;
             border-radius: 5px;
             cursor: pointer;
             margin: 0 10px;
             font-size: 1rem;
             font-weight: bold;
+            transition: background-color 0.3s;
         }
         .calendar-nav button:hover {
-            background-color: #45a049;
+            background-color: #2980b9;
         }
         .goal-status {
             margin-top: 20px;
             font-size: 1.2rem;
             text-align: center;
-            color: #FF6347;
+            color: #e74c3c;
             font-weight: bold;
         }
         footer {
             text-align: center;
             padding: 20px 0;
-            background-color: #f1f1f1;
+            background-color: #bdc3c7;
             margin-top: 20px;
             font-size: 1rem;
-            color: #666;
+            color: #2c3e50;
+            border-radius: 0 0 15px 15px;
         }
         .auth-container {
             width: 300px;
-            margin: 20px auto;
+            margin: 40px auto;
             background-color: white;
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
             text-align: center;
         }
         .auth-container h3 {
@@ -147,33 +161,40 @@
         }
         .auth-container input, .auth-container select {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             margin: 10px 0;
-            border: 1px solid #ccc;
+            border: 1px solid #bdc3c7;
             border-radius: 5px;
-            background-color: #f0f0f0;
-            color: #333;
+            background-color: #ecf0f1;
+            color: #34495e;
         }
         .auth-container button {
             width: 100%;
-            padding: 10px;
-            background-color: #4CAF50;
+            padding: 12px;
+            background-color: #3498db;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             font-size: 1rem;
             font-weight: bold;
+            transition: background-color 0.3s;
         }
         .auth-container button:hover {
-            background-color: #45a049;
+            background-color: #2980b9;
+        }
+        .auth-container .guest-button {
+            background-color: #95a5a6;
+        }
+        .auth-container .guest-button:hover {
+            background-color: #7f8c8d;
         }
         .export-container {
             text-align: right;
             margin-top: 20px;
         }
         .export-container button {
-            background-color: #4CAF50;
+            background-color: #3498db;
             color: white;
             border: none;
             padding: 10px 20px;
@@ -181,15 +202,110 @@
             cursor: pointer;
             font-size: 1rem;
             font-weight: bold;
+            transition: background-color 0.3s;
         }
         .export-container button:hover {
-            background-color: #45a049;
+            background-color: #2980b9;
+        }
+        .feedback-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 300px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+        .feedback-container h4 {
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        .feedback-container textarea {
+            width: 100%;
+            height: 80px;
+            border: 1px solid #bdc3c7;
+            border-radius: 5px;
+            padding: 10px;
+            background-color: #ecf0f1;
+            color: #34495e;
+            margin-bottom: 10px;
+            resize: none;
+        }
+        .feedback-container button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .feedback-container button:hover {
+            background-color: #2980b9;
+        }
+        .feedback-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #3498db;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 1.5rem;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+        }
+        .reset-goal-container {
+            text-align: right;
+            margin-top: 10px;
+        }
+        .reset-goal-container button {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .reset-goal-container button:hover {
+            background-color: #c0392b;
+        }
+        .delete-income-button {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            margin-left: 10px;
+        }
+        .delete-income-button:hover {
+            background-color: #c0392b;
         }
     </style>
 </head>
 <body>
     <header>
+        <a href="#"><img src="https://www.yourlogohere.com/logo.png" alt="Logo"></a>
         <h1>칼퇴 - 소득 관리 달력</h1>
+        <a href="https://www.youtube.com/@user-ln6vs1tg3w" class="youtube-link" target="_blank">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/4/42/YouTube_icon_%282013-2017%29.png" alt="YouTube Logo">
+        </a>
     </header>
 
     <div class="auth-container">
@@ -197,6 +313,7 @@
         <input type="text" placeholder="이메일" id="loginEmail">
         <input type="password" placeholder="비밀번호" id="loginPassword">
         <button onclick="login()">로그인</button>
+        <button class="guest-button" onclick="continueAsGuest()">비회원으로 계속하기</button>
         <p>계정이 없으신가요? <a href="#" onclick="showSignup()">회원가입</a></p>
     </div>
 
@@ -239,12 +356,22 @@
             <label for="incomeAmount">소득 금액 (원):</label>
             <input type="number" id="incomeAmount" placeholder="소득 금액을 입력하세요" required>
             <button type="button" onclick="addIncome()">소득 추가하기</button>
+            <button type="button" class="delete-income-button" onclick="deleteIncome()">삭제하기</button>
         </form>
+
+        <h3>예산 관리</h3>
+        <label for="monthlyBudget">월별 예산 (원):</label>
+        <input type="number" id="monthlyBudget" placeholder="월별 예산을 입력하세요" oninput="checkBudgetStatus()">
+        <div class="goal-status" id="budgetStatus"></div>
+
         <h3>소득 합계: <span id="totalIncome">0</span> 원</h3>
         <label for="taxAmount">세금 (원):</label>
         <input type="number" id="taxAmount" placeholder="세금 금액을 입력하세요" oninput="updateTotalIncome()">
         <label for="incomeGoal">목표 소득 (원):</label>
         <input type="number" id="incomeGoal" placeholder="목표 소득을 입력하세요" oninput="checkGoalStatus()">
+        <div class="reset-goal-container">
+            <button onclick="resetGoal()">목표 금액 초기화</button>
+        </div>
         <div class="goal-status" id="goalStatus"></div>
         <button onclick="saveData()">저장</button>
     </div>
@@ -253,12 +380,21 @@
         <p>&copy; 2024 칼퇴. All Rights Reserved.</p>
     </footer>
 
+    <!-- 피드백 창 -->
+    <div class="feedback-toggle" onclick="toggleFeedback()">💬</div>
+    <div class="feedback-container" id="feedbackContainer" style="display:none;">
+        <h4>피드백 남기기</h4>
+        <textarea id="feedbackText" placeholder="피드백을 입력하세요"></textarea>
+        <button onclick="submitFeedback()">제출</button>
+    </div>
+
     <script>
         let currentMonth = new Date().getMonth();
         let currentYear = new Date().getFullYear();
         let incomeData = JSON.parse(localStorage.getItem('incomeData')) || {};
         let savedGoal = localStorage.getItem('incomeGoal');
         let savedTax = localStorage.getItem('taxAmount');
+        let savedBudget = localStorage.getItem('monthlyBudget');
 
         function createCalendar(year, month) {
             const calendar = document.getElementById('calendar');
@@ -311,7 +447,26 @@
 
             updateTotalIncome();
             checkGoalStatus();
+            checkBudgetStatus();
             createCalendar(currentYear, currentMonth); // 업데이트된 소득 데이터를 반영하기 위해 캘린더를 다시 그림
+        }
+
+        function deleteIncome() {
+            const selectedDate = document.getElementById('selectedDate').innerText;
+
+            if (incomeData[selectedDate]) {
+                delete incomeData[selectedDate];
+                alert("소득 기록이 삭제되었습니다.");
+                document.getElementById('incomeForm').reset();
+                document.getElementById('incomeForm').style.display = 'none';
+
+                updateTotalIncome();
+                checkGoalStatus();
+                checkBudgetStatus();
+                createCalendar(currentYear, currentMonth);
+            } else {
+                alert("삭제할 소득 기록이 없습니다.");
+            }
         }
 
         function updateTotalIncome() {
@@ -321,6 +476,23 @@
             }
             const taxAmount = parseInt(document.getElementById('taxAmount').value) || 0;
             document.getElementById('totalIncome').innerText = Math.round(totalIncome - taxAmount).toLocaleString();
+        }
+
+        function checkBudgetStatus() {
+            const budget = parseInt(document.getElementById('monthlyBudget').value) || 0;
+            let totalIncome = 0;
+            for (const date in incomeData) {
+                const dateObj = new Date(date);
+                if (dateObj.getMonth() === currentMonth && dateObj.getFullYear() === currentYear) {
+                    totalIncome += incomeData[date].amount;
+                }
+            }
+
+            if (totalIncome > budget && budget > 0) {
+                document.getElementById('budgetStatus').innerText = `경고: 예산을 초과했습니다! (${totalIncome.toLocaleString()} 원 / 예산: ${budget.toLocaleString()} 원)`;
+            } else {
+                document.getElementById('budgetStatus').innerText = `현재 지출: ${totalIncome.toLocaleString()} 원 / 예산: ${budget.toLocaleString()} 원`;
+            }
         }
 
         function checkGoalStatus() {
@@ -338,10 +510,18 @@
             }
         }
 
+        function resetGoal() {
+            document.getElementById('incomeGoal').value = '';
+            localStorage.removeItem('incomeGoal');
+            document.getElementById('goalStatus').innerText = '';
+            alert("목표 금액이 초기화되었습니다.");
+        }
+
         function saveData() {
             localStorage.setItem('incomeData', JSON.stringify(incomeData));
             localStorage.setItem('incomeGoal', document.getElementById('incomeGoal').value);
             localStorage.setItem('taxAmount', document.getElementById('taxAmount').value);
+            localStorage.setItem('monthlyBudget', document.getElementById('monthlyBudget').value);
             alert("데이터가 저장되었습니다.");
         }
 
@@ -352,8 +532,12 @@
             if (savedTax) {
                 document.getElementById('taxAmount').value = savedTax;
             }
+            if (savedBudget) {
+                document.getElementById('monthlyBudget').value = savedBudget;
+            }
             updateTotalIncome();
             checkGoalStatus();
+            checkBudgetStatus();
             createCalendar(currentYear, currentMonth);
         }
 
@@ -399,6 +583,28 @@
         function showLogin() {
             document.querySelector('.auth-container').style.display = 'block';
             document.getElementById('signupContainer').style.display = 'none';
+        }
+
+        function continueAsGuest() {
+            document.getElementById('incomeManagement').style.display = 'block';
+            document.querySelector('.auth-container').style.display = 'none';
+            loadData();
+        }
+
+        function toggleFeedback() {
+            const feedbackContainer = document.getElementById('feedbackContainer');
+            feedbackContainer.style.display = feedbackContainer.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function submitFeedback() {
+            const feedbackText = document.getElementById('feedbackText').value;
+            if (feedbackText.trim()) {
+                alert("피드백이 제출되었습니다. 감사합니다!");
+                document.getElementById('feedbackText').value = '';
+                toggleFeedback();
+            } else {
+                alert("피드백 내용을 입력해주세요.");
+            }
         }
 
         createCalendar(currentYear, currentMonth);
