@@ -3,405 +3,480 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>칼퇴 - 소득 관리 달력</title>
+    <title>빵원 - 세금 환급 서비스</title>
     <style>
+        /* 기본 스타일 */
         body {
-            font-family: 'Noto Sans KR', sans-serif;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
             margin: 0;
             padding: 0;
-            background-color: #f9f9f9;
-            color: #333;
         }
         header {
-            background-color: #4CAF50;
+            background-color: #2c3e50;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        header .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        header .logo img {
+            margin-right: 10px;
+        }
+        nav {
+            background-color: #34495e;
+            overflow: hidden;
+            padding: 10px 0;
+        }
+        nav a {
+            float: left;
+            display: block;
             color: white;
             text-align: center;
-            padding: 2rem 0;
-            font-size: 2.5rem;
-            font-weight: bold;
-            position: relative;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-size: 1.1em;
         }
-        header:before {
-            content: "";
-            background-image: url('https://www.w3schools.com/howto/img_calendar.png'); /* 달력 이미지 추가 */
-            background-size: cover;
-            background-position: center;
-            opacity: 0.2;
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: 1;
+        nav a:hover {
+            background-color: #2c3e50;
         }
-        header h1 {
-            position: relative;
-            z-index: 2;
+        nav .right {
+            float: right;
         }
         .container {
-            width: 80%;
-            margin: 20px auto;
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
         }
         h2 {
-            color: #4CAF50;
-            font-size: 2rem;
-            font-weight: bold;
+            color: #34495e;
         }
-        input[type="text"], input[type="number"], input[type="date"], select {
-            width: calc(100% - 22px);
+        form {
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        input, select, textarea {
+            width: 100%;
             padding: 10px;
             margin: 10px 0;
+            border-radius: 4px;
             border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #f0f0f0;
-            color: #333;
+            font-size: 1em;
         }
         button {
-            padding: 10px 20px;
-            background-color: #4CAF50;
+            background-color: #007BFF;
             color: white;
+            padding: 10px 15px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            margin-top: 10px;
-            font-size: 1rem;
-            font-weight: bold;
+            font-size: 1em;
+            transition: background-color 0.3s;
         }
         button:hover {
-            background-color: #45a049;
+            background-color: #0056b3;
         }
-        .calendar {
+        .split-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .split {
+            width: 48%;
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
+        }
+        .split h3 {
+            color: #34495e;
+            margin-top: 0;
+        }
+        .faq dt, .news article, .review {
+            font-weight: bold;
+            cursor: pointer;
+            padding: 10px;
+            background-color: #e7e7e7;
+            border-radius: 4px;
+            margin-top: 5px;
+        }
+        .faq dd {
+            display: none;
+            padding: 10px;
+            background-color: white;
+            border-radius: 4px;
+            margin-top: 5px;
+        }
+        /* 카드형 레이아웃 */
+        .card-container {
             display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 10px;
-            margin-top: 20px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
         }
-        .calendar div {
-            background-color: #f0f0f0;
-            padding: 20px;
-            text-align: center;
-            border-radius: 5px;
-            cursor: pointer;
-            position: relative;
-            font-size: 1rem;
-        }
-        .calendar div:hover {
-            background-color: #e0e0e0;
-        }
-        .calendar div span {
-            display: block;
-            margin-top: 10px;
-            color: #4CAF50;
-            font-weight: bold;
-            font-size: 1.1rem;
-        }
-        .calendar-nav {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 1.2rem;
-        }
-        .calendar-nav button {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin: 0 10px;
-            font-size: 1rem;
-            font-weight: bold;
-        }
-        .calendar-nav button:hover {
-            background-color: #45a049;
-        }
-        .goal-status {
-            margin-top: 20px;
-            font-size: 1.2rem;
-            text-align: center;
-            color: #FF6347;
-            font-weight: bold;
-        }
-        footer {
-            text-align: center;
-            padding: 20px 0;
-            background-color: #f1f1f1;
-            margin-top: 20px;
-            font-size: 1rem;
-            color: #666;
-        }
-        .auth-container {
-            width: 300px;
-            margin: 20px auto;
+        .card {
             background-color: white;
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        /* 광고 배너 스타일 */
+        .ad-banner {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+            font-size: 0.9em;
+            color: #555;
+            margin: 20px 0;
+        }
+        .newsletter-container {
+            background-color: #007BFF;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
             text-align: center;
         }
-        .auth-container h3 {
-            margin-bottom: 20px;
-        }
-        .auth-container input, .auth-container select {
-            width: 100%;
+        .newsletter-container input[type="email"] {
+            width: 60%;
             padding: 10px;
             margin: 10px 0;
+            border-radius: 4px;
             border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #f0f0f0;
-            color: #333;
+            font-size: 1em;
         }
-        .auth-container button {
+        .newsletter-container button {
+            background-color: #ffcc00;
+            color: black;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        .newsletter-container button:hover {
+            background-color: #e6b800;
+        }
+        /* 대화형 FAQ 스타일 */
+        .chatbot-container {
+            background-color: #f4f4f4;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: 20px auto;
+        }
+        .chatbot-container h3 {
+            margin-top: 0;
+            color: #34495e;
+        }
+        .chatbot-container input[type="text"] {
             width: 100%;
             padding: 10px;
-            background-color: #4CAF50;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .chatbot-container button {
+            background-color: #007BFF;
             color: white;
+            padding: 10px 15px;
+            margin-top: 10px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 1rem;
-            font-weight: bold;
+            font-size: 1em;
         }
-        .auth-container button:hover {
-            background-color: #45a049;
+        .chatbot-container button:hover {
+            background-color: #0056b3;
         }
-        .export-container {
-            text-align: right;
-            margin-top: 20px;
-        }
-        .export-container button {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            padding: 10px 20px;
+        .chatbot-response {
+            margin-top: 15px;
+            background-color: white;
+            padding: 10px;
             border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: bold;
-        }
-        .export-container button:hover {
-            background-color: #45a049;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>칼퇴 - 소득 관리 달력</h1>
-    </header>
 
-    <div class="auth-container">
-        <h3>로그인</h3>
-        <input type="text" placeholder="이메일" id="loginEmail">
-        <input type="password" placeholder="비밀번호" id="loginPassword">
-        <button onclick="login()">로그인</button>
-        <p>계정이 없으신가요? <a href="#" onclick="showSignup()">회원가입</a></p>
+<header>
+    <div class="logo">
+        <img src="l"D:\User_Data(절대삭제금지!)\Desktop\DALL·E 2024-09-03 09.49.10 - A modern logo for a tax refund service called '빵원'. The logo should incorporate elements that symbolize money or savings, such as a stylized coin, a p.webp"" alt="빵원 로고" width="40" height="40">
+        <span>빵원</span>
+    </div>
+    <nav>
+        <a href="#tax-calculator">세금 환급 계산기</a>
+        <a href="#reservation">상담 예약</a>
+        <a href="#faq-news">FAQ & 뉴스</a>
+        <a href="#guide">세금 가이드</a>
+        <a href="#reviews">성공 사례</a>
+        <a href="#newsletter">뉴스레터</a>
+        <a href="#" class="right">로그인</a>
+        <a href="#" class="right">회원가입</a>
+    </nav>
+</header>
+
+<div class="container">
+    <!-- 광고 배너 -->
+    <div class="ad-banner">
+        <p>여기에 광고를 게재하세요! 클릭률이 높은 위치입니다.</p>
     </div>
 
-    <div class="auth-container" id="signupContainer" style="display:none;">
-        <h3>회원가입</h3>
-        <input type="text" placeholder="이름" id="signupName">
-        <input type="date" placeholder="생년월일" id="signupDob">
-        <input type="text" placeholder="전화번호" id="signupPhone">
-        <select id="signupJob">
-            <option value="">직업 선택</option>
-            <option value="회사원">회사원</option>
-            <option value="프리랜서">프리랜서</option>
-            <option value="자영업자">자영업자</option>
-            <option value="학생">학생</option>
-            <option value="기타">기타</option>
-        </select>
-        <input type="text" placeholder="이메일" id="signupEmail">
-        <input type="password" placeholder="비밀번호" id="signupPassword">
-        <button onclick="signup()">회원가입</button>
-        <p>이미 계정이 있으신가요? <a href="#" onclick="showLogin()">로그인</a></p>
-    </div>
+    <!-- 세금 환급 계산기 -->
+    <section id="tax-calculator">
+        <h2>세금 환급 계산기</h2>
+        <form>
+            <label for="income">연 소득:</label>
+            <input type="number" id="income" name="income" placeholder="연 소득을 입력하세요">
 
-    <div class="container" style="display:none;" id="incomeManagement">
-        <h2>소득 관리</h2>
-        <div class="calendar-nav">
-            <button onclick="changeMonth(-1)">이전 달</button>
-            <span id="currentMonth"></span>
-            <button onclick="changeMonth(1)">다음 달</button>
-        </div>
-        <div id="calendar" class="calendar"></div>
-        <form id="incomeForm" style="display: none;">
-            <h3 id="selectedDate"></h3>
-            <label for="incomeCategory">카테고리:</label>
-            <select id="incomeCategory">
-                <option value="월급">월급</option>
-                <option value="보너스">보너스</option>
-                <option value="프리랜서">프리랜서</option>
-                <option value="기타">기타</option>
+            <label for="deductions">공제 항목:</label>
+            <input type="number" id="deductions" name="deductions" placeholder="공제 금액을 입력하세요">
+
+            <label for="tax-rate">세율(%):</label>
+            <input type="number" id="tax-rate" name="tax-rate" placeholder="세율을 입력하세요">
+
+            <label for="tax-type">소득 유형:</label>
+            <select id="tax-type" name="tax-type">
+                <option value="income">근로소득</option>
+                <option value="business">사업소득</option>
+                <option value="rental">임대소득</option>
             </select>
-            <label for="incomeAmount">소득 금액 (원):</label>
-            <input type="number" id="incomeAmount" placeholder="소득 금액을 입력하세요" required>
-            <button type="button" onclick="addIncome()">소득 추가하기</button>
+
+            <button type="button" onclick="calculateTax()">세금 계산하기</button>
+
+            <p id="result"></p>
         </form>
-        <h3>소득 합계: <span id="totalIncome">0</span> 원</h3>
-        <label for="taxAmount">세금 (원):</label>
-        <input type="number" id="taxAmount" placeholder="세금 금액을 입력하세요" oninput="updateTotalIncome()">
-        <label for="incomeGoal">목표 소득 (원):</label>
-        <input type="number" id="incomeGoal" placeholder="목표 소득을 입력하세요" oninput="checkGoalStatus()">
-        <div class="goal-status" id="goalStatus"></div>
-        <button onclick="saveData()">저장</button>
+    </section>
+
+    <!-- 광고 배너 -->
+    <div class="ad-banner">
+        <p>이 위치에 광고를 배치하면 방문자의 주목을 끌 수 있습니다.</p>
     </div>
 
-    <footer>
-        <p>&copy; 2024 칼퇴. All Rights Reserved.</p>
-    </footer>
+    <!-- 상담 예약 시스템 -->
+    <section id="reservation">
+        <h2>상담 예약</h2>
+        <form>
+            <label for="name">이름:</label>
+            <input type="text" id="name" name="name" placeholder="이름을 입력하세요">
 
-    <script>
-        let currentMonth = new Date().getMonth();
-        let currentYear = new Date().getFullYear();
-        let incomeData = JSON.parse(localStorage.getItem('incomeData')) || {};
-        let savedGoal = localStorage.getItem('incomeGoal');
-        let savedTax = localStorage.getItem('taxAmount');
+            <label for="email">이메일:</label>
+            <input type="email" id="email" name="email" placeholder="이메일을 입력하세요">
 
-        function createCalendar(year, month) {
-            const calendar = document.getElementById('calendar');
-            calendar.innerHTML = '';
-            const firstDay = new Date(year, month).getDay();
-            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            <label for="date">상담 날짜:</label>
+            <input type="date" id="date" name="date">
 
-            document.getElementById('currentMonth').innerText = `${year}년 ${month + 1}월`;
+            <label for="time">상담 시간:</label>
+            <select id="time" name="time">
+                <option value="09:00">09:00</option>
+                <option value="10:00">10:00</option>
+                <option value="11:00">11:00</option>
+                <option value="14:00">14:00</option>
+                <option value="15:00">15:00</option>
+            </select>
 
-            for (let i = 0; i < firstDay; i++) {
-                const emptyCell = document.createElement('div');
-                calendar.appendChild(emptyCell);
+            <label for="details">상담 내용:</label>
+            <textarea id="details" name="details" rows="4" placeholder="상담 내용을 입력하세요"></textarea>
+
+            <button type="submit">예약하기</button>
+        </form>
+    </section>
+
+    <!-- 광고 배너 -->
+    <div class="ad-banner">
+        <p>비즈니스 광고로 사이트 방문자에게 노출하세요!</p>
+    </div>
+
+    <!-- FAQ, 세금 뉴스, 성공 사례 섹션 -->
+    <section id="faq-news" class="split-container">
+        <div class="split">
+            <h3>FAQ</h3>
+            <dl class="faq">
+                <dt>Q1: 세금 신고 기한은 언제인가요?</dt>
+                <dd>세금 신고 기한은 매년 5월 31일까지입니다.</dd>
+
+                <dt>Q2: 세금 환급은 언제 받을 수 있나요?</dt>
+                <dd>세금 환급은 신고 후 약 3개월 이내에 처리됩니다.</dd>
+
+                <dt>Q3: 소득세율은 어떻게 결정되나요?</dt>
+                <dd>소득세율은 연 소득에 따라 결정되며, 국세청에서 정한 표준 세율표를 참고합니다.</dd>
+            </dl>
+        </div>
+        <div class="split">
+            <h3>세금 뉴스</h3>
+            <div class="news">
+                <article>
+                    <h4>세금 관련 최신 뉴스</h4>
+                    <p>네이버 뉴스에서 최신 기사를 가져오는 중...</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- 성공 사례 -->
+    <section id="reviews" class="reviews-container">
+        <h2>고객 성공 사례</h2>
+        <div class="review">
+            <p>"빵원 덕분에 큰 금액의 세금 환급을 받을 수 있었습니다! 정말 감사드립니다."</p>
+            <p>- 김철수</p>
+        </div>
+        <div class="review">
+            <p>"처음으로 세금 환급을 받아봤는데, 상담이 정말 도움이 많이 됐습니다."</p>
+            <p>- 이영희</p>
+        </div>
+        <div class="review">
+            <p>"빠르고 정확한 서비스 덕분에 세금 신고가 수월했습니다. 추천합니다."</p>
+            <p>- 박준호</p>
+        </div>
+    </section>
+
+    <!-- 세금 가이드 -->
+    <section id="guide" class="card-container">
+        <div class="card">
+            <h4>근로소득세</h4>
+            <ul>
+                <li><a href="#">근로소득세 계산법</a></li>
+                <li><a href="#">근로소득세 절세 팁</a></li>
+                <li><a href="#">연말정산 가이드</a></li>
+            </ul>
+        </div>
+        <div class="card">
+            <h4>사업소득세</h4>
+            <ul>
+                <li><a href="#">사업소득세 신고 방법</a></li>
+                <li><a href="#">사업소득세 절세 전략</a></li>
+                <li><a href="#">자영업자 세금 가이드</a></li>
+            </ul>
+        </div>
+        <div class="card">
+            <h4>부가가치세</h4>
+            <ul>
+                <li><a href="#">부가가치세 기본 개념</a></li>
+                <li><a href="#">부가가치세 신고 절차</a></li>
+                <li><a href="#">부가가치세 절세 방법</a></li>
+            </ul>
+        </div>
+        <div class="card">
+            <h4>양도소득세</h4>
+            <ul>
+                <li><a href="#">양도소득세 계산법</a></li>
+                <li><a href="#">양도소득세 신고 요령</a></li>
+                <li><a href="#">부동산 양도소득세 절세</a></li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 뉴스레터 -->
+    <section id="newsletter" class="newsletter-container">
+        <h2>뉴스레터 구독하기</h2>
+        <p>세금 관련 최신 정보와 팁을 뉴스레터로 받아보세요.</p>
+        <input type="email" placeholder="이메일을 입력하세요">
+        <button type="submit">구독하기</button>
+    </section>
+
+    <!-- 대화형 FAQ 및 챗봇 -->
+    <section class="chatbot-container">
+        <h3>무엇을 도와드릴까요?</h3>
+        <input type="text" placeholder="질문을 입력하세요">
+        <button>질문하기</button>
+        <div class="chatbot-response">
+            <p>챗봇이 답변을 여기에 표시합니다...</p>
+        </div>
+    </section>
+
+</div>
+
+<!-- 실시간 채팅 버튼 -->
+<div id="chat-button" onclick="openChat()">💬</div>
+
+<script>
+    // 세금 계산기 기능
+    function calculateTax() {
+        const income = document.getElementById('income').value;
+        const deductions = document.getElementById('deductions').value;
+        const taxRate = document.getElementById('tax-rate').value;
+        const taxType = document.getElementById('tax-type').value;
+
+        if (income && taxRate && taxType) {
+            const taxableIncome = income - deductions;
+            const tax = taxableIncome * (taxRate / 100);
+            document.getElementById('result').innerText = `예상 세금: ${tax}원`;
+        } else {
+            document.getElementById('result').innerText = '모든 필드를 입력해주세요.';
+        }
+    }
+
+    // FAQ와 뉴스 섹션 자동 전환 기능
+    let faqIndex = 0;
+    let newsIndex = 0;
+    let reviewIndex = 0;
+
+    function rotateFAQ() {
+        const faqItems = document.querySelectorAll('.faq dt');
+        const totalFAQs = faqItems.length;
+
+        faqItems.forEach((item, index) => {
+            item.nextElementSibling.style.display = index === faqIndex ? 'block' : 'none';
+        });
+
+        faqIndex = (faqIndex + 1) % totalFAQs;
+    }
+
+    function rotateNews() {
+        // 실시간 뉴스 업데이트 (네이버 API와 연동)
+        const newsItems = document.querySelectorAll('.news article');
+        // 최신 뉴스로 교체
+        newsItems.forEach((item, index) => {
+            if (index === newsIndex) {
+                fetch('/news')  // 이 부분은 서버에서 네이버 API를 통해 뉴스를 가져오는 경로로 변경 필요
+                    .then(response => response.json())
+                    .then(data => {
+                        item.querySelector('h4').innerText = data.title;
+                        item.querySelector('p').innerText = data.description;
+                    });
             }
+        });
 
-            for (let day = 1; day <= daysInMonth; day++) {
-                const dayDiv = document.createElement('div');
-                dayDiv.innerText = day;
+        newsIndex = (newsIndex + 1) % newsItems.length;
+    }
 
-                const dateKey = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-                if (incomeData[dateKey]) {
-                    const incomeDisplay = document.createElement('span');
-                    incomeDisplay.innerText = Math.round(incomeData[dateKey].amount).toLocaleString() + ' 원';
-                    dayDiv.appendChild(incomeDisplay);
-                }
+    function rotateReviews() {
+        const reviewItems = document.querySelectorAll('.review');
+        const totalReviews = reviewItems.length;
 
-                dayDiv.addEventListener('click', () => selectDate(year, month, day));
-                calendar.appendChild(dayDiv);
-            }
-        }
+        reviewItems.forEach((item, index) => {
+            item.style.display = index === reviewIndex ? 'block' : 'none';
+        });
 
-        function selectDate(year, month, day) {
-            const date = new Date(year, month, day);
-            const dateString = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
-            document.getElementById('selectedDate').innerText = dateString;
-            document.getElementById('incomeForm').style.display = 'block';
-        }
+        reviewIndex = (reviewIndex + 1) % totalReviews;
+    }
 
-        function addIncome() {
-            const selectedDate = document.getElementById('selectedDate').innerText;
-            const incomeCategory = document.getElementById('incomeCategory').value;
-            const incomeAmount = parseInt(document.getElementById('incomeAmount').value);
+    setInterval(rotateFAQ, 5000);  // 5초마다 FAQ 전환
+    setInterval(rotateNews, 5000); // 5초마다 뉴스 업데이트 및 전환
+    setInterval(rotateReviews, 5000); // 5초마다 성공 사례 전환
 
-            if (!incomeData[selectedDate]) {
-                incomeData[selectedDate] = { amount: 0, category: incomeCategory };
-            }
+    // 실시간 채팅 상담 창 열기 (더미 함수)
+    function openChat() {
+        alert("실시간 채팅 상담 기능은 아직 구현되지 않았습니다.");
+    }
+</script>
 
-            incomeData[selectedDate].amount += incomeAmount;
-            document.getElementById('incomeForm').reset();
-            document.getElementById('incomeForm').style.display = 'none';
-
-            updateTotalIncome();
-            checkGoalStatus();
-            createCalendar(currentYear, currentMonth); // 업데이트된 소득 데이터를 반영하기 위해 캘린더를 다시 그림
-        }
-
-        function updateTotalIncome() {
-            let totalIncome = 0;
-            for (const date in incomeData) {
-                totalIncome += incomeData[date].amount;
-            }
-            const taxAmount = parseInt(document.getElementById('taxAmount').value) || 0;
-            document.getElementById('totalIncome').innerText = Math.round(totalIncome - taxAmount).toLocaleString();
-        }
-
-        function checkGoalStatus() {
-            let totalIncome = 0;
-            for (const date in incomeData) {
-                totalIncome += incomeData[date].amount;
-            }
-
-            const goal = parseInt(document.getElementById('incomeGoal').value) || 0;
-            if (totalIncome >= goal && goal > 0) {
-                document.getElementById('goalStatus').innerText = "축하합니다! 목표 소득을 달성했습니다!";
-                alert("축하합니다! 목표 소득을 달성했습니다!");
-            } else {
-                document.getElementById('goalStatus').innerText = `현재 소득: ${Math.round(totalIncome).toLocaleString()} 원 / 목표: ${Math.round(goal).toLocaleString()} 원`;
-            }
-        }
-
-        function saveData() {
-            localStorage.setItem('incomeData', JSON.stringify(incomeData));
-            localStorage.setItem('incomeGoal', document.getElementById('incomeGoal').value);
-            localStorage.setItem('taxAmount', document.getElementById('taxAmount').value);
-            alert("데이터가 저장되었습니다.");
-        }
-
-        function loadData() {
-            if (savedGoal) {
-                document.getElementById('incomeGoal').value = savedGoal;
-            }
-            if (savedTax) {
-                document.getElementById('taxAmount').value = savedTax;
-            }
-            updateTotalIncome();
-            checkGoalStatus();
-            createCalendar(currentYear, currentMonth);
-        }
-
-        function changeMonth(offset) {
-            currentMonth += offset;
-            if (currentMonth < 0) {
-                currentMonth = 11;
-                currentYear -= 1;
-            } else if (currentMonth > 11) {
-                currentMonth = 0;
-                currentYear += 1;
-            }
-            createCalendar(currentYear, currentMonth);
-        }
-
-        function login() {
-            const email = document.getElementById('loginEmail').value;
-            const password = document.getElementById('loginPassword').value;
-            // 로그인 로직 구현 (예: 서버에서 사용자 인증)
-            alert("로그인 성공!");
-            document.getElementById('incomeManagement').style.display = 'block';
-            document.querySelector('.auth-container').style.display = 'none';
-            loadData();
-        }
-
-        function signup() {
-            const name = document.getElementById('signupName').value;
-            const dob = document.getElementById('signupDob').value;
-            const phone = document.getElementById('signupPhone').value;
-            const job = document.getElementById('signupJob').value;
-            const email = document.getElementById('signupEmail').value;
-            const password = document.getElementById('signupPassword').value;
-            // 회원가입 로직 구현 (예: 서버에 사용자 정보 저장)
-            alert("회원가입 성공!");
-            showLogin();
-        }
-
-        function showSignup() {
-            document.querySelector('.auth-container').style.display = 'none';
-            document.getElementById('signupContainer').style.display = 'block';
-        }
-
-        function showLogin() {
-            document.querySelector('.auth-container').style.display = 'block';
-            document.getElementById('signupContainer').style.display = 'none';
-        }
-
-        createCalendar(currentYear, currentMonth);
-    </script>
 </body>
 </html>
