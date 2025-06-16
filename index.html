@@ -1,105 +1,1003 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to My Website</title>
+    <title>재무비율 분석 발표자료</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
-        body, html {
-            height: 100%;
-            margin: 0;
-            font-family: Arial, sans-serif;
-            color: #fff;
-            overflow: hidden;
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #eef4f7; /* Light blue-gray background */
+            line-height: 1.8;
+            color: #333;
+            transition: background-color 0.3s ease;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 25px; /* More rounded corners */
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15); /* Stronger shadow for depth */
+            transition: box-shadow 0.3s ease;
+        }
+        h1 {
+            color: #2c3e50; /* Darker blue */
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 3em; /* Larger title */
+            font-weight: 700;
+            position: relative;
+            padding-bottom: 20px;
+            letter-spacing: -0.5px;
+        }
+        h1::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            transform: translateX(-50%);
+            width: 100px; /* Wider underline */
+            height: 5px; /* Thicker underline */
+            background-color: #3498db; /* Blue underline */
+            border-radius: 3px;
+        }
+        h2 {
+            color: #34495e; /* Slightly lighter dark blue */
+            border-bottom: 2px solid #aed6f1; /* Lighter blue underline */
+            padding-bottom: 18px;
+            margin-bottom: 35px;
+            text-align: left;
+            font-size: 2.2em; /* Larger sub-titles */
+            font-weight: 600;
+        }
+        h3 {
+            color: #4a6982; /* Muted dark blue */
+            font-size: 1.6em;
+            margin-bottom: 18px;
+        }
+        .intro-text {
+            text-align: center;
+            margin-bottom: 60px;
+            color: #555;
+            font-size: 1.3em; /* Larger intro text */
+            line-height: 1.8;
+            background-color: #ebf5fb; /* Very light blue background */
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 6px solid #5d9cec; /* Brighter blue border */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        .section {
+            margin-bottom: 60px; /* More spacing */
+            padding: 35px;
+            background-color: #fcfcfc;
+            border-radius: 18px; /* More rounded */
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08); /* Enhanced shadow */
+            transition: all 0.4s ease-in-out;
+        }
+        .section:hover {
+            transform: translateY(-10px); /* More pronounced lift */
+            box-shadow: 0 18px 35px rgba(0,0,0,0.15); /* Even stronger shadow on hover */
+        }
+        .category-card, .ratio-card {
+            background: linear-gradient(135deg, #e0f2f7 0%, #c1e4ee 100%); /* Gradient background */
+            padding: 30px;
+            margin: 25px 0;
+            border-radius: 15px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.12); /* Deeper shadow */
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(.25,.8,.25,1); /* Material design like transition */
+            border-left: 8px solid #2196f3; /* Brighter blue border */
             display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative; /* For 3D effect */
+            transform-style: preserve-3d;
+        }
+        .category-card:hover, .ratio-card:hover {
+            transform: translateY(-5px) scale(1.01) translateZ(10px); /* Lift and slight scale with Z-axis for 3D */
+            box-shadow: 0 12px 25px rgba(0,0,0,0.25); /* Stronger shadow on hover */
+            background: linear-gradient(135deg, #c1e4ee 0%, #a0dae4 100%); /* Change gradient on hover */
+        }
+        .category-card-title, .ratio-title {
+            color: #1a237e; /* Dark blue text */
+            font-weight: 700;
+            font-size: 1.6em;
+        }
+        .ratio-content {
+            display: none;
+            padding: 25px;
+            background: #f8fcfd; /* Very light blue background */
+            border-radius: 10px;
+            margin-top: 20px;
+            line-height: 1.8;
+            border: 1px dashed #b3e5fc; /* Lighter dashed border */
+            animation: fadeIn 0.7s ease-out;
+        }
+        .ratio-content.active {
+            display: block;
+        }
+        .formula {
+            background-color: #e3f2fd; /* Light blue for formula */
+            padding: 18px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-family: 'D2Coding', 'Courier New', monospace;
+            color: #3f51b5; /* Blue text for formula */
+            font-size: 1.2em;
+            border: 1px solid #90caf9;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .toggle-icon {
+            transition: transform 0.3s ease;
+            font-size: 1.8em;
+            color: #2196f3; /* Blue icon */
+            font-weight: bold;
+        }
+        .toggle-icon.active {
+            transform: rotate(180deg);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .sub-category {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px dashed #cfd8dc;
+        }
+        .sub-category h3 {
+            text-align: left;
+            color: #4a6982;
+        }
+        .highlight {
+            color: #e91e63; /* Pink highlight */
+            font-weight: bold;
+        }
+
+        /* Page specific styles */
+        .hidden-page {
+            display: none;
+            animation: fadeIn 0.8s ease-out;
+        }
+        .main-page {
+            display: block;
+        }
+        .back-button {
+            background-color: #607d8b;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.2em;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            display: inline-block;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .back-button:hover {
+            background-color: #455a64;
+            transform: translateY(-3px);
+        }
+        .quiz-section {
+            background-color: #fcfcfc;
+            padding: 35px;
+            border-radius: 18px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+        .quiz-question-container {
+            border: 1px solid #a7d9f7; /* Lighter blue border */
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 25px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .quiz-options label {
+            display: block;
+            margin-bottom: 12px;
+            cursor: pointer;
+            font-size: 1.1em;
+            padding: 8px;
+            border-radius: 5px;
+            transition: background-color 0.2s ease;
+        }
+        .quiz-options label:hover {
+            background-color: #e3f2fd;
+        }
+        .quiz-options input[type="radio"] {
+            margin-right: 10px;
+            transform: scale(1.2); /* Larger radio buttons */
+        }
+        .quiz-feedback {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            font-weight: bold;
+            display: none;
+            line-height: 1.6;
+            border: 1px solid;
+        }
+        .correct {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            border-color: #a5d6a7;
+        }
+        .incorrect {
+            background-color: #ffebee;
+            color: #c62828;
+            border-color: #ef9a9a;
+        }
+        .quiz-nav-buttons button {
+            background-color: #2196f3;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.1em;
+            margin-top: 25px;
+            margin-right: 15px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+        }
+        .quiz-nav-buttons button:hover {
+            background-color: #1976d2;
+            transform: translateY(-2px);
+        }
+        #quiz-start-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 18px 35px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1.4em;
+            margin-top: 40px;
+            display: block;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+        }
+        #quiz-start-button:hover {
+            background-color: #45a049;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        .video-thumbnail-container {
+            width: 80%;
+            max-width: 700px;
+            margin: 50px auto;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            overflow: hidden;
+            position: relative;
+            aspect-ratio: 16 / 9;
+        }
+        .video-thumbnail-placeholder {
+            background-color: #444; /* Dark background for video feel */
+            display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-        }
-
-        /* 비디오 배경 스타일 */
-        .video-bg {
-            position: fixed;
-            right: 0;
-            bottom: 0;
-            min-width: 100%;
-            min-height: 100%;
-            z-index: -1;
-            object-fit: cover; /* 비디오가 화면에 맞게 잘려서 표시됩니다 */
-        }
-
-        /* 메인 콘텐츠 */
-        .container {
-            position: relative;
-            z-index: 1;
-            text-align: center;
-            padding: 20px;
-            background-color: rgba(0, 0, 0, 0.5); /* 배경 흐림 효과 */
-            border-radius: 8px;
-            width: 100%;
-            max-width: 600px; /* 최대 너비를 설정해 화면이 너무 넓어지지 않도록 합니다 */
-            box-sizing: border-box;
-        }
-
-        .logo {
-            max-width: 100%;
-            height: auto;
-            margin-bottom: 20px;
-        }
-
-        h1 {
-            margin-bottom: 20px;
-            font-size: 2em;
-        }
-
-        p {
-            font-size: 1.2em;
-            margin-bottom: 30px;
-        }
-
-        .link-container {
-            display: flex;
-            justify-content: space-around;
-        }
-
-        a {
-            display: inline-block;
-            padding: 10px 20px;
             color: white;
-            background-color: #007bff;
-            text-decoration: none;
+            font-size: 2em;
+            font-weight: 700;
+            cursor: pointer;
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            transition: opacity 0.3s ease;
+            z-index: 10;
+        }
+        .video-thumbnail-placeholder::before {
+            content: '▶'; /* Play icon */
+            font-size: 4em;
+            color: rgba(255,255,255,0.8);
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+        .video-thumbnail-placeholder:hover::before {
+            transform: scale(1.2);
+            color: white;
+        }
+        .video-thumbnail-title {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 0.8em; /* Adjust relative to parent font size */
+            background-color: rgba(0,0,0,0.5);
+            padding: 10px 0;
+            box-sizing: border-box;
+            color: #eee;
+        }
+        .video-player-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: none; /* Hidden by default */
+            position: absolute;
+            top: 0; left: 0;
+            z-index: 5;
+        }
+        .close-video-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(0,0,0,0.6);
+            color: white;
+            border: none;
             border-radius: 5px;
-            transition: background-color 0.3s ease;
-            font-size: 1.2em;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 0.9em;
+            z-index: 20;
+            display: none; /* Hidden by default */
         }
-
-        a:hover {
-            background-color: #0056b3;
+        .key-summary {
+            background-color: #f7f7f7;
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 40px;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
         }
-
-        /* 페이드인 애니메이션 */
-        @keyframes fadeIn {
-            to {
-                opacity: 1;
-            }
+        .key-summary h3 {
+            color: #3f51b5;
+            text-align: left;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #d4e3f8;
+            padding-bottom: 10px;
+        }
+        .key-summary ul {
+            list-style-type: disc;
+            padding-left: 25px;
+            margin-top: 15px;
+        }
+        .key-summary ul li {
+            margin-bottom: 10px;
+            font-size: 1.05em;
+            color: #4a4a4a;
+        }
+        .chart-placeholder {
+            background-color: #f0f0f0;
+            border: 1px dashed #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+            color: #888;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1em;
         }
     </style>
 </head>
 <body>
-    <!-- 비디오 배경 -->
-    <video autoplay muted loop class="video-bg">
-        <source src="[Copy] Netflix Intro 넷플릭스 인트로.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
-
-    <!-- 메인 콘텐츠 -->
     <div class="container">
-        <img src="D:\User_Data(절대삭제금지!)\Desktop\DALL·E 2024-09-03 09.49.10 - A modern logo for a tax refund service called '빵원'. The logo should incorporate elements that symbolize money or savings, such as a stylized coin, a p.webp" alt="Logo" class="logo">
-        <h1>내 페이지에 오신것을 환영합니다!</h1>
-        <p>더 나은 페이지를 만들 수 있도록 노력하겠습니다</p>
-        <div class="link-container">
-            <a href="dd.html">빵원 - 세금 환급서비스</a>
-            <a href="ss.html">칼퇴 - 소득 관리 달력</a>
+        <h1>재무비율 분석 발표자료</h1>
+        <p class="intro-text">
+            기업의 재무건전성과 경영 성과를 이해하는 핵심 도구인 재무비율 분석에 오신 것을 환영합니다.<br>
+            아래 각 카테고리를 클릭하여 상세한 설명을 확인해보세요. 하단에는 퀴즈도 준비되어 있습니다!
+        </p>
+
+        <!-- Main Page Content -->
+        <div id="main-page" class="main-page">
+            <div class="video-thumbnail-container">
+                <div class="video-thumbnail-placeholder" onclick="playPresentationVideo()">
+                    <span class="video-thumbnail-title">재무비율 분석: 발표 시작</span>
+                </div>
+                <iframe id="presentation-video-player" class="video-player-iframe" allowfullscreen></iframe>
+                <button id="close-video-button" class="close-video-button" onclick="closePresentationVideo()">영상 닫기</button>
+            </div>
+
+            <div class="section">
+                <div class="category-card" onclick="showPage('profitability-page')">
+                    <div class="category-card-title">1. 수익성 비율</div>
+                    <span class="toggle-icon">▶</span>
+                </div>
+                <div class="category-card" onclick="showPage('stability-page')">
+                    <div class="category-card-title">2. 안정성 비율</div>
+                    <span class="toggle-icon">▶</span>
+                </div>
+                <div class="category-card" onclick="showPage('growth-page')">
+                    <div class="category-card-title">3. 성장성 비율</div>
+                    <span class="toggle-icon">▶</span>
+                </div>
+                <div class="category-card" onclick="showPage('activity-page')">
+                    <div class="category-card-title">4. 활동성 비율</div>
+                    <span class="toggle-icon">▶</span>
+                </div>
+                <div class="category-card" onclick="showPage('other-ratios-page')">
+                    <div class="category-card-title">5. 기타 재무비율</div>
+                    <span class="toggle-icon">▶</span>
+                </div>
+            </div>
+
+            <button id="quiz-start-button" onclick="showPage('quiz-page')">
+                재무비율 퀴즈 풀러가기
+            </button>
         </div>
+
+        <!-- Profitability Ratios Page -->
+        <div id="profitability-page" class="hidden-page">
+            <button class="back-button" onclick="showPage('main-page')">← 뒤로 가기</button>
+            <h2>1. 수익성 비율</h2>
+            <div class="ratio-card" onclick="toggleContent(this)">
+                <div class="ratio-title">
+                    수익성 비율 (개념)
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="ratio-content">
+                    <p>기업이 얼마나 효율적으로 이익을 창출하는지를 측정하는 지표입니다. 기업의 경영 성과를 평가하는 데 사용됩니다.</p>
+                    <div class="chart-placeholder">여기에 수익성 관련 그래프/차트 이미지 삽입 (예: 매출액순이익률 추이)</div>
+                </div>
+            </div>
+            <div class="key-summary">
+                <h3>핵심 요약</h3>
+                <ul>
+                    <li>수익성 비율은 기업의 이익 창출 능력을 나타냅니다.</li>
+                    <li>매출액 대비 순이익, 자기자본 대비 순이익 등을 통해 기업의 효율성을 평가할 수 있습니다.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Stability Ratios Page -->
+        <div id="stability-page" class="hidden-page">
+            <button class="back-button" onclick="showPage('main-page')">← 뒤로 가기</button>
+            <h2>2. 안정성 비율</h2>
+            <div class="sub-category">
+                <h3>유동성 비율</h3>
+                <div class="ratio-card" onclick="toggleContent(this)">
+                    <div class="ratio-title">
+                        유동비율
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="ratio-content">
+                        <p>기업의 <span class="highlight">단기적 지급 능력</span>을 평가하는 비율입니다. 일반적으로 1보다 크면 단기 지급 능력이 양호한 것으로 평가됩니다.</p>
+                        <div class="formula">계산식: 유동자산 ÷ 유동부채</div>
+                        <div class="chart-placeholder">여기에 유동비율 추이 그래프/차트 이미지 삽입</div>
+                    </div>
+                </div>
+                <div class="ratio-card" onclick="toggleContent(this)">
+                    <div class="ratio-title">
+                        당좌비율
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="ratio-content">
+                        <p>보다 <span class="highlight">엄격한 기업의 단기 지급 능력</span>을 평가하는 지표입니다. 재고자산을 제외한 유동자산으로 유동부채를 얼마나 감당할 수 있는지를 보여줍니다.</p>
+                        <div class="formula">계산식: (유동자산 - 재고자산) ÷ 유동부채</div>
+                        <div class="chart-placeholder">여기에 당좌비율 추이 그래프/차트 이미지 삽입</div>
+                    </div>
+                </div>
+                <div class="ratio-card" onclick="toggleContent(this)">
+                    <div class="ratio-title">
+                        현금비율
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="ratio-content">
+                        <p><span class="highlight">가장 보수적인 유동성 지표</span>로, 즉시 현금화할 수 있는 자산으로 단기 채무를 얼마나 상환할 수 있는지를 보여줍니다.</p>
+                        <div class="formula">계산식: 현금 및 현금성자산 ÷ 유동부채</div>
+                        <div class="chart-placeholder">여기에 현금비율 추이 그래프/차트 이미지 삽입</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sub-category">
+                <h3>레버리지 비율</h3>
+                <div class="ratio-card" onclick="toggleContent(this)">
+                    <div class="ratio-title">
+                        부채비율
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="ratio-content">
+                        <p>자기자본 대비 타인자본의 의존도를 평가합니다. 이 비율이 높을수록 <span class="highlight">재무위험 및 지급 불능 위험이 높아집니다.</span></p>
+                        <div class="formula">계산식: 부채총계 ÷ 자기자본</div>
+                        <div class="chart-placeholder">여기에 부채비율 추이 그래프/차트 이미지 삽입</div>
+                    </div>
+                </div>
+                <div class="ratio-card" onclick="toggleContent(this)">
+                    <div class="ratio-title">
+                        이자보상비율
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="ratio-content">
+                        <p>기업이 이자 비용을 얼마나 감당할 수 있는지를 나타내는 지표입니다. 이 비율이 <span class="highlight">낮을수록 재무 위험이 커집니다.</span></p>
+                        <div class="formula">계산식: (영업이익 + 이자비용) ÷ 이자비용</div>
+                        <div class="chart-placeholder">여기에 이자보상비율 추이 그래프/차트 이미지 삽입</div>
+                    </div>
+                </div>
+                <div class="ratio-card" onclick="toggleContent(this)">
+                    <div class="ratio-title">
+                        비유동비율
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="ratio-content">
+                        <p>비유동자산에 투자된 자금이 자기자본으로 얼마나 조달되었는지를 보여주는 비율입니다. 장기 자금 운용의 안정성을 평가합니다.</p>
+                        <div class="formula">계산식: 비유동자산 ÷ 자기자본</div>
+                        <div class="chart-placeholder">여기에 비유동비율 추이 그래프/차트 이미지 삽입</div>
+                    </div>
+                </div>
+            </div>
+            <div class="key-summary">
+                <h3>핵심 요약</h3>
+                <ul>
+                    <li>안정성 비율은 기업의 단기 및 장기 재무 건전성을 평가합니다.</li>
+                    <li>유동성 비율은 즉각적인 지급 능력을, 레버리지 비율은 부채 의존도를 나타냅니다.</li>
+                    <li>각 비율의 적정 수준은 산업 및 기업 특성에 따라 다를 수 있습니다.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Growth Ratios Page -->
+        <div id="growth-page" class="hidden-page">
+            <button class="back-button" onclick="showPage('main-page')">← 뒤로 가기</button>
+            <h2>3. 성장성 비율</h2>
+            <div class="ratio-card" onclick="toggleContent(this)">
+                <div class="ratio-title">
+                    총자산증가율
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="ratio-content">
+                    <p>기업의 <span class="highlight">외형적 성장을 평가</span>하는 지표입니다. 총자산 규모가 전기말에 비해 얼마나 증가했는지를 나타냅니다.</p>
+                    <div class="formula">계산식: (당기말 총자산 - 전기말 총자산) ÷ 전기말 총자산 × 100</div>
+                    <div class="chart-placeholder">여기에 총자산증가율 추이 그래프/차트 이미지 삽입</div>
+                </div>
+            </div>
+            <div class="ratio-card" onclick="toggleContent(this)">
+                <div class="ratio-title">
+                    매출액증가율
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="ratio-content">
+                    <p>기업의 <span class="highlight">외형적 성장을 평가</span>하며, 매출액의 성장률을 나타냅니다. 시장 점유율 확대와 영업력 향상을 보여줍니다.</p>
+                    <div class="formula">계산식: (당기 매출액 - 전기말 매출액) ÷ 전기말 매출액 × 100</div>
+                    <div class="chart-placeholder">여기에 매출액증가율 추이 그래프/차트 이미지 삽입</div>
+                </div>
+            </div>
+            <div class="ratio-card" onclick="toggleContent(this)">
+                <div class="ratio-title">
+                    순이익증가율
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="ratio-content">
+                    <p>기업의 <span class="highlight">실질적인 기업 성장</span>을 평가하는데 사용되는 지표입니다. 순이익이 전기 대비 얼마나 증가했는지를 보여줍니다.</p>
+                    <div class="formula">계산식: (당기 순이익 - 전기 순이익) ÷ 전기 순이익 × 100</div>
+                    <div class="chart-placeholder">여기에 순이익증가율 추이 그래프/차트 이미지 삽입</div>
+                </div>
+            </div>
+            <div class="ratio-card" onclick="toggleContent(this)">
+                <div class="ratio-title">
+                    자기자본증가율
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="ratio-content">
+                    <p>기업의 <span class="highlight">자본조달 능력 증가</span> 여부를 보여줍니다. 유상증자나 이익의 사내 유보를 통해 자기자본이 얼마나 증가했는지 알 수 있습니다.</p>
+                    <div class="formula">계산식: (당기말 자기자본 - 전기말 자기자본) ÷ 전기말 자기자본 × 100</div>
+                    <div class="chart-placeholder">여기에 자기자본증가율 추이 그래프/차트 이미지 삽입</div>
+                </div>
+            </div>
+            <div class="key-summary">
+                <h3>핵심 요약</h3>
+                <ul>
+                    <li>성장성 비율은 기업의 규모와 이익이 얼마나 빠르게 증가하는지를 보여줍니다.</li>
+                    <li>총자산과 매출액 증가율은 외형적 성장을, 순이익과 자기자본 증가율은 내실 있는 성장을 나타냅니다.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Activity Ratios Page -->
+        <div id="activity-page" class="hidden-page">
+            <button class="back-button" onclick="showPage('main-page')">← 뒤로 가기</button>
+            <h2>4. 활동성 비율</h2>
+            <div class="ratio-card" onclick="toggleContent(this)">
+                <div class="ratio-title">
+                    활동성 비율 (개념)
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="ratio-content">
+                    <p>기업이 자산을 얼마나 효율적으로 사용하고 있는지를 측정하는 지표입니다. 자산이 매출액으로 얼마나 잘 전환되는지를 나타냅니다.</p>
+                    <div class="chart-placeholder">여기에 활동성 관련 그래프/차트 이미지 삽입 (예: 총자산회전율 추이)</div>
+                </div>
+            </div>
+            <div class="key-summary">
+                <h3>핵심 요약</h3>
+                <ul>
+                    <li>활동성 비율은 기업 자산의 효율적 운용 능력을 측정합니다.</li>
+                    <li>자산이 매출액으로 얼마나 빠르게 전환되는지를 평가하는 데 사용됩니다.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Other Financial Ratios Page -->
+        <div id="other-ratios-page" class="hidden-page">
+            <button class="back-button" onclick="showPage('main-page')">← 뒤로 가기</button>
+            <h2>5. 기타 재무비율</h2>
+            <div class="ratio-card" onclick="toggleContent(this)">
+                <div class="ratio-title">
+                    PER (주가이익비율)
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="ratio-content">
+                    <p><span class="highlight">투자자가 기업의 이익에 대해 지불할 의향</span>을 나타내는 지표입니다. 주가가 주당이익의 몇 배인지를 보여주며, 낮을수록 저평가된 주식으로 상승할 것을 기대할 수 있습니다.</p>
+                    <div class="formula">계산식: 주가 ÷ 주당이익</div>
+                    <div class="chart-placeholder">여기에 PER 추이 그래프/차트 이미지 삽입</div>
+                </div>
+            </div>
+            <div class="ratio-card" onclick="toggleContent(this)">
+                <div class="ratio-title">
+                    PBR (주가순자산비율)
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="ratio-content">
+                    <p>주가가 <span class="highlight">장부 가치 대비 얼마나 평가</span>되었는지를 나타내는 지표입니다. 기업의 자기자본 이익률이 자기자본 비용보다 높을 것으로 예상되면 PBR은 1보다 커집니다.</p>
+                    <div class="formula">계산식: 주가 ÷ 주당순자산</div>
+                    <div class="chart-placeholder">여기에 PBR 추이 그래프/차트 이미지 삽입</div>
+                </div>
+            </div>
+            <div class="ratio-card" onclick="toggleContent(this)">
+                <div class="ratio-title">
+                    PSR (주가매출액비율)
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="ratio-content">
+                    <p>PER, PBR과 같이 <span class="highlight">미래 수익성 전망과 위험에 따라 결정</span>되지만, 적자 기업에도 적용 가능하다는 장점이 있습니다. 매출액 대비 주가를 평가합니다.</p>
+                    <div class="formula">계산식: 주가 ÷ 주당매출액</div>
+                    <div class="chart-placeholder">여기에 PSR 추이 그래프/차트 이미지 삽입</div>
+                </div>
+            </div>
+            <div class="ratio-card" onclick="toggleContent(this)">
+                <div class="ratio-title">
+                    PCR (주가현금흐름비율)
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="ratio-content">
+                    <p>주가가 주당 영업활동 현금흐름의 몇 배인지를 나타내는 지표입니다. 현금 흐름은 보통 현금 흐름표상 영업활동 현금 흐름을 사용합니다.</p>
+                    <div class="formula">계산식: 주가 ÷ 주당영업활동 현금흐름</div>
+                    <div class="chart-placeholder">여기에 PCR 추이 그래프/차트 이미지 삽입</div>
+                </div>
+            </div>
+            <div class="sub-category">
+                <h3>표준 비율</h3>
+                <div class="ratio-card" onclick="toggleContent(this)">
+                    <div class="ratio-title">
+                        표준 비율 (개념)
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="ratio-content">
+                        <p>계산된 재무비율을 적정하게 평가하기 위해 사용되는 비교 기준입니다. 다음 세 가지로 분류됩니다:</p>
+                        <ul>
+                            <li><span class="highlight">과거 평균 비율:</span> 분석 대상 기업의 추세 분석에 유용합니다.</li>
+                            <li><span class="highlight">산업 평균 비율:</span> 타 기업들과 비교 분석 시 사용됩니다.</li>
+                            <li><span class="highlight">정책적 목표비율:</span> 경영 관리 측면에서 성과 측정 및 통제에 활용됩니다.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="key-summary">
+                <h3>핵심 요약</h3>
+                <ul>
+                    <li>기타 재무비율은 주가와 관련된 가치 평가 지표들을 포함합니다.</li>
+                    <li>PER, PBR, PSR, PCR은 기업의 시장 가치와 수익성, 자산, 매출, 현금흐름을 종합적으로 평가하는 데 사용됩니다.</li>
+                    <li>표준 비율은 재무비율 분석의 기준을 제시하여 보다 객관적인 평가를 돕습니다.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Quiz Page -->
+        <div id="quiz-page" class="hidden-page quiz-section">
+            <button class="back-button" onclick="showPage('main-page')">← 뒤로 가기</button>
+            <h2>재무비율 분석 퀴즈</h2>
+            <div id="quiz-questions-container"></div>
+            <div class="quiz-nav-buttons">
+                <button id="prev-question" style="display: none;">이전 문제</button>
+                <button id="next-question">다음 문제</button>
+                <button id="check-answer" style="display: none;">정답 확인</button>
+                <button id="show-results" style="display: none;">최종 결과 보기</button>
+            </div>
+            <div id="quiz-feedback" class="quiz-feedback"></div>
+            <div id="final-quiz-results" class="quiz-feedback" style="display: none;"></div>
+        </div>
+
     </div>
+
+    <script>
+        const pages = ['main-page', 'profitability-page', 'stability-page', 'growth-page', 'activity-page', 'other-ratios-page', 'quiz-page'];
+
+        function showPage(pageId) {
+            pages.forEach(id => {
+                document.getElementById(id).classList.remove('main-page');
+                document.getElementById(id).classList.add('hidden-page');
+            });
+            document.getElementById(pageId).classList.remove('hidden-page');
+            document.getElementById(pageId).classList.add('main-page');
+            window.scrollTo(0, 0); // Scroll to top when changing page
+            window.speechSynthesis.cancel(); // Stop any ongoing speech
+        }
+
+        function toggleContent(element) {
+            const content = element.querySelector('.ratio-content');
+            const icon = element.querySelector('.toggle-icon');
+            
+            content.classList.toggle('active');
+            icon.classList.toggle('active');
+            
+            if (content.classList.contains('active')) {
+                icon.textContent = '▲';
+                // speakContent(content.textContent); // Removed speech for explanations
+            } else {
+                icon.textContent = '▼';
+                window.speechSynthesis.cancel(); // Stop speaking if content is hidden
+            }
+        }
+
+        function speakContent(text) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                const voices = window.speechSynthesis.getVoices();
+                const koreanFemaleVoice = voices.find(voice => 
+                    voice.lang === 'ko-KR' && (voice.name.includes('Female') || voice.name.includes('여성') || voice.name.includes('Yuna') || voice.name.includes('Nari')) 
+                );
+                if (koreanFemaleVoice) {
+                    utterance.voice = koreanFemaleVoice;
+                } else {
+                    const anyKoreanVoice = voices.find(voice => voice.lang === 'ko-KR');
+                    if (anyKoreanVoice) {
+                        utterance.voice = anyKoreanVoice;
+                    } else {
+                        utterance.lang = 'ko-KR'; // Default to Korean if no specific voice found
+                    }
+                }
+                window.speechSynthesis.speak(utterance);
+            } else {
+                console.warn("Speech synthesis not supported in this browser.");
+            }
+        }
+
+        // Video Playback Logic
+        function playPresentationVideo() {
+            const videoContainer = document.querySelector('.video-thumbnail-container');
+            const videoPlaceholder = document.querySelector('.video-thumbnail-placeholder');
+            const videoPlayer = document.getElementById('presentation-video-player');
+            const closeButton = document.getElementById('close-video-button');
+
+            // Replace with your YouTube embed URL. Example:
+            // const youtubeEmbedUrl = "https://www.youtube.com/embed/YOUR_VIDEO_ID?autoplay=1&rel=0";
+            const youtubeEmbedUrl = "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&rel=0"; // Example: Rick Astley - Never Gonna Give You Up
+            
+            videoPlayer.src = youtubeEmbedUrl; // Set video source
+            videoPlaceholder.style.display = 'none';
+            videoPlayer.style.display = 'block';
+            closeButton.style.display = 'block';
+        }
+
+        function closePresentationVideo() {
+            const videoPlaceholder = document.querySelector('.video-thumbnail-placeholder');
+            const videoPlayer = document.getElementById('presentation-video-player');
+            const closeButton = document.getElementById('close-video-button');
+
+            videoPlayer.src = ''; // Stop video playback
+            videoPlaceholder.style.display = 'flex'; // Show placeholder again
+            videoPlayer.style.display = 'none';
+            closeButton.style.display = 'none';
+        }
+
+        // Quiz Logic
+        const quizQuestions = [
+            {
+                question: "유동비율은 기업의 단기적 지급 능력을 평가하는 지표로, 1보다 크면 능력이 양호하다고 평가한다. (O/X)",
+                type: "ox",
+                answer: "O",
+                explanation: "유동비율은 유동자산을 유동부채로 나눈 것으로, 1보다 크면 단기 채무 상환 능력이 좋다고 판단합니다."
+            },
+            {
+                question: "다음 중 레버리지 비율에 해당하는 것은?",
+                type: "multiple-choice",
+                options: ["당좌비율", "현금비율", "부채비율", "총자산회전율"],
+                answer: "부채비율",
+                explanation: "레버리지 비율은 타인자본 의존도를 평가하는 지표로, 부채비율, 이자보상비율 등이 있습니다."
+            },
+            {
+                question: "기업의 자산 규모 성장을 평가하는 외형적 성장 지표는 '순이익증가율'이다. (O/X)",
+                type: "ox",
+                answer: "X",
+                explanation: "기업의 자산 규모 성장을 평가하는 외형적 성장 지표는 '총자산증가율'입니다. 순이익증가율은 수익성 성장을 평가합니다."
+            },
+            {
+                question: "다음 중 기업의 실질적인 성장을 평가하는 지표는?",
+                type: "multiple-choice",
+                options: ["총자산증가율", "매출액증가율", "순이익증가율", "자기자본증가율"],
+                answer: "순이익증가율",
+                explanation: "순이익증가율은 기업의 실질적인 성장을 평가하는 지표입니다. 총자산증가율과 매출액증가율은 외형적 성장을, 자기자본증가율은 자본조달 능력 증가를 평가합니다."
+            },
+            {
+                question: "PBR이 1보다 큰 경우, 이는 다음 중 어떤 상황을 의미하는가?",
+                type: "multiple-choice",
+                options: [
+                    "기업의 자기자본 이익률이 자기자본 비용보다 낮은 경우",
+                    "기업의 자기자본 이익률이 자기자본 비용보다 높은 경우",
+                    "기업의 부채비율이 높은 경우",
+                    "기업의 유동비율이 낮은 경우"
+                ],
+                answer: "기업의 자기자본 이익률이 자기자본 비용보다 높은 경우",
+                explanation: "PBR이 1보다 크다는 것은 기업의 자기자본 이익률이 자기자본 비용보다 높을 것으로 시장이 기대한다는 의미입니다. 이는 기업의 미래 수익성에 대한 긍정적인 전망을 반영합니다."
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let userAnswers = new Array(quizQuestions.length).fill(null);
+        let score = 0;
+
+        const quizQuestionsContainer = document.getElementById('quiz-questions-container');
+        const prevQuestionBtn = document.getElementById('prev-question');
+        const nextQuestionBtn = document.getElementById('next-question');
+        const checkAnswerBtn = document.getElementById('check-answer');
+        const showResultsBtn = document.getElementById('show-results');
+        const quizFeedbackDiv = document.getElementById('quiz-feedback');
+        const finalQuizResultsDiv = document.getElementById('final-quiz-results');
+
+        function renderQuestion() {
+            const q = quizQuestions[currentQuestionIndex];
+            quizQuestionsContainer.innerHTML = ''; // Clear previous question
+            quizFeedbackDiv.style.display = 'none';
+            finalQuizResultsDiv.style.display = 'none';
+
+            const questionDiv = document.createElement('div');
+            questionDiv.classList.add('quiz-question-container');
+            questionDiv.innerHTML = `
+                <h3>Q${currentQuestionIndex + 1}. ${q.question}</h3>
+                <div class="quiz-options"></div>
+            `;
+            const optionsDiv = questionDiv.querySelector('.quiz-options');
+
+            if (q.type === "ox") {
+                optionsDiv.innerHTML += `
+                    <label><input type="radio" name="q${currentQuestionIndex}" value="O" ${userAnswers[currentQuestionIndex] === 'O' ? 'checked' : ''}> O</label>
+                    <label><input type="radio" name="q${currentQuestionIndex}" value="X" ${userAnswers[currentQuestionIndex] === 'X' ? 'checked' : ''}> X</label>
+                `;
+            } else if (q.type === "multiple-choice") {
+                q.options.forEach(option => {
+                    optionsDiv.innerHTML += `
+                        <label>
+                            <input type="radio" name="q${currentQuestionIndex}" value="${option}" ${userAnswers[currentQuestionIndex] === option ? 'checked' : ''}> ${option}
+                        </label>
+                    `;
+                });
+            }
+            quizQuestionsContainer.appendChild(questionDiv);
+
+            // Update button visibility
+            prevQuestionBtn.style.display = currentQuestionIndex > 0 ? 'inline-block' : 'none';
+            nextQuestionBtn.style.display = currentQuestionIndex < quizQuestions.length - 1 ? 'inline-block' : 'none';
+            checkAnswerBtn.style.display = 'inline-block';
+            showResultsBtn.style.display = currentQuestionIndex === quizQuestions.length - 1 && userAnswers[currentQuestionIndex] !== null ? 'inline-block' : 'none';
+
+            // Add event listeners for radio buttons to save answer immediately
+            optionsDiv.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.addEventListener('change', (event) => {
+                    userAnswers[currentQuestionIndex] = event.target.value;
+                    quizFeedbackDiv.style.display = 'none'; // Hide feedback if user changes answer
+                    // Show Show Results button if it's the last question and an answer is selected
+                    if (currentQuestionIndex === quizQuestions.length - 1 && userAnswers[currentQuestionIndex] !== null) {
+                        showResultsBtn.style.display = 'inline-block';
+                    }
+                });
+            });
+        }
+
+        function checkAnswer() {
+            const selectedAnswer = document.querySelector(`input[name="q${currentQuestionIndex}"]:checked`);
+            const q = quizQuestions[currentQuestionIndex];
+            
+            if (!selectedAnswer) {
+                quizFeedbackDiv.classList.remove('correct', 'incorrect');
+                quizFeedbackDiv.classList.add('incorrect');
+                quizFeedbackDiv.innerHTML = '<p>답변을 선택해주세요.</p>';
+                quizFeedbackDiv.style.display = 'block';
+                speakContent("답변을 선택해주세요.");
+                return;
+            }
+
+            const userAnswer = selectedAnswer.value;
+            let feedbackHTML = '';
+            if (userAnswer === q.answer) {
+                feedbackHTML = '<p style="color:#28a745;"><strong>정답입니다!</strong></p>';
+                quizFeedbackDiv.classList.remove('incorrect');
+                quizFeedbackDiv.classList.add('correct');
+                speakContent("정답입니다. " + q.explanation);
+            } else {
+                feedbackHTML = '<p style="color:#dc3545;"><strong>오답입니다!</strong></p>';
+                quizFeedbackDiv.classList.remove('correct');
+                quizFeedbackDiv.classList.add('incorrect');
+                speakContent("오답입니다. " + q.explanation);
+            }
+            feedbackHTML += `<p>정답: <strong>${q.answer}</strong></p>`;
+            feedbackHTML += `<p>해설: ${q.explanation}</p>`;
+            quizFeedbackDiv.innerHTML = feedbackHTML;
+            quizFeedbackDiv.style.display = 'block';
+
+            // Disable radio buttons after checking answer
+            quizQuestionsContainer.querySelectorAll(`input[name="q${currentQuestionIndex}"]`).forEach(radio => {
+                radio.disabled = true;
+            });
+            checkAnswerBtn.style.display = 'none'; // Hide check answer button after checking
+        }
+
+        function showFinalResults() {
+            score = 0; // Reset score for final calculation
+            let resultsHTML = '<h3>최종 퀴즈 결과:</h3>';
+            quizQuestions.forEach((q, index) => {
+                const userAnswer = userAnswers[index];
+                const isCorrect = (userAnswer === q.answer);
+                if (isCorrect) score++;
+
+                resultsHTML += `
+                    <div style="margin-bottom: 15px; padding: 10px; border: 1px solid #ccc; border-radius: 5px; background-color: ${isCorrect ? '#e8f5e9' : '#ffebee'};">
+                        <p><strong>Q${index + 1}.</strong> ${q.question}</p>
+                        <p>당신의 답변: <span style="color: ${isCorrect ? '#28a745' : '#dc3545'}; font-weight: bold;">${userAnswer || '선택 안 함'}</span></p>
+                        <p>정답: <span style="color: #28a745; font-weight: bold;">${q.answer}</span></p>
+                        <p>해설: ${q.explanation}</p>
+                    </div>
+                `;
+            });
+            resultsHTML += `<h4>총점: ${score} / ${quizQuestions.length}</h4>`;
+            finalQuizResultsDiv.innerHTML = resultsHTML;
+            finalQuizResultsDiv.style.display = 'block';
+            quizFeedbackDiv.style.display = 'none'; // Hide current question feedback
+            quizQuestionsContainer.style.display = 'none'; // Hide questions
+            prevQuestionBtn.style.display = 'none';
+            nextQuestionBtn.style.display = 'none';
+            checkAnswerBtn.style.display = 'none';
+            showResultsBtn.style.display = 'none';
+            speakContent(`총점은 ${quizQuestions.length} 문제 중 ${score} 점입니다.`);
+        }
+
+        prevQuestionBtn.addEventListener('click', () => {
+            window.speechSynthesis.cancel(); // Stop speaking when navigating
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                renderQuestion();
+            }
+        });
+
+        nextQuestionBtn.addEventListener('click', () => {
+            window.speechSynthesis.cancel(); // Stop speaking when navigating
+            if (currentQuestionIndex < quizQuestions.length - 1) {
+                currentQuestionIndex++;
+                renderQuestion();
+            } else if (currentQuestionIndex === quizQuestions.length - 1) {
+                showFinalResults(); // Automatically show results if on last question and click next
+            }
+        });
+
+        checkAnswerBtn.addEventListener('click', checkAnswer);
+        showResultsBtn.addEventListener('click', showFinalResults);
+
+        // Initialize quiz when quiz page is shown
+        document.addEventListener('DOMContentLoaded', () => {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.onvoiceschanged = () => {
+                    // Voices loaded
+                };
+            }
+
+            document.getElementById('quiz-page').addEventListener('transitionend', (event) => {
+                if (event.propertyName === 'opacity' && document.getElementById('quiz-page').classList.contains('main-page')) {
+                    currentQuestionIndex = 0; // Reset quiz when entering quiz page
+                    userAnswers = new Array(quizQuestions.length).fill(null); // Reset answers
+                    renderQuestion();
+                }
+            });
+        });
+
+    </script>
 </body>
 </html>
+
